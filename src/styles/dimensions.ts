@@ -13,8 +13,9 @@ export const dimensions = {
     xxxl: '3rem',
   },
   borderRadius: {
-    base: '0.625rem',
-    sm: '1.25rem',
     xs: '0.25rem',
+    sm: '0.625rem',
+    base: '1rem',
+    md: '1.25rem',
   },
 }

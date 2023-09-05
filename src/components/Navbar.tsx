@@ -6,12 +6,13 @@ import arrowDown from '../assets/images/icon-arrow-down.svg'
 
 import { fontSizes } from '../styles/fontSizes'
 import { colors } from '../styles/colors'
+import { dimensions } from '../styles/dimensions'
 
-const NavLogo = styled.img``
 const NavStyled = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: ${dimensions.spacing.xxxl};
 `
 const FlexContainer = styled.div`
   display: flex;
@@ -84,7 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({ dropDownOptions }) => {
   return (
     <header>
       <NavStyled>
-        <NavLogo src={navLogo} />
+        <img src={navLogo} alt="Logo" />
 
         <FlexContainer>
           <>{dropDownOptions[0]}</>
@@ -108,9 +109,9 @@ export const Navbar: React.FC<NavbarProps> = ({ dropDownOptions }) => {
               stroke={
                 checked ? `${colors.accents.info}` : `${colors.greys.grey1}`
               }
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
               d="M1 10.449a10.544 10.544 0 0 0 19.993 4.686C11.544 15.135 6.858 10.448 6.858 1A10.545 10.545 0 0 0 1 10.449Z"
             />
           </svg>
