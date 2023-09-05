@@ -1,8 +1,9 @@
 import { styled } from 'styled-components'
-import { colors } from './styles/colors'
 import { dimensions } from './styles/dimensions'
 import { createGlobalStyle } from 'styled-components'
 import { Navbar } from './components/Navbar'
+
+const dropDownOptions = ['Sans Serif', 'Serif', 'Mono']
 
 const GlobalStyle = createGlobalStyle`
  *{
@@ -10,11 +11,12 @@ const GlobalStyle = createGlobalStyle`
   padding: 0;
   box-sizing: border-box;
  }
+
+ body{
+  font-family: "Inter";
+ }
 `
 
-const Title = styled.h1`
-  color: ${colors.darks.dark1};
-`
 const Container = styled.div`
   width: 90%;
   max-width: 736px;
@@ -26,8 +28,7 @@ function App() {
     <>
       <GlobalStyle />
       <Container>
-        <Navbar />
-        <Title>TITLE</Title>
+        <Navbar dropDownOptions={dropDownOptions} />
       </Container>
     </>
   )
