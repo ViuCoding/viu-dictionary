@@ -30,6 +30,7 @@ const Container = styled.div`
 
 const InputWrapper = styled.div`
   position: relative;
+  margin-bottom: ${dimensions.spacing.xxl};
 `
 
 const SearchInput = styled.input`
@@ -73,7 +74,6 @@ function App() {
       <GlobalStyle />
       <Container>
         <Navbar dropDownOptions={dropDownOptions} />
-
         <InputWrapper>
           <SearchInput
             type="text"
