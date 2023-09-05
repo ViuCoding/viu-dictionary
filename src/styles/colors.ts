@@ -1,4 +1,6 @@
 export const colors = {
+  white: '#FFFFFF',
+  
   darks: {
     dark1: '#050505',
     dark2: '#1f1f1f',
@@ -10,7 +12,6 @@ export const colors = {
     grey1: '#757575',
     grey2: '#E9E9E9 ',
     grey3: '#F4F4F4 ',
-    grey4: '#FFFFFF',
   },
 
   accents: {
