@@ -27,6 +27,10 @@ const PhoneticTranscription = styled.p`
   }
 `
 
+const SVGStyled = styled.svg`
+  cursor: pointer;
+`
+
 type ResultHeaderProps = {
   dictionaryEntry: {
     word: string
@@ -39,6 +43,13 @@ type ResultHeaderProps = {
 export const ResultHeader: React.FC<ResultHeaderProps> = ({
   dictionaryEntry,
 }) => {
+  // eslint-disable-next-line prefer-const
+  let audio = new Audio(dictionaryEntry[0].audio[0])
+
+  const playAudio = () => {
+    audio.play()
+  }
+
   return (
     <FlexContainer>
       <div>
@@ -49,17 +60,18 @@ export const ResultHeader: React.FC<ResultHeaderProps> = ({
         </PhoneticTranscription>
       </div>
 
-      <svg
+      <SVGStyled
         xmlns="http://www.w3.org/2000/svg"
         width="48"
         height="48"
         viewBox="0 0 75 75"
+        onClick={playAudio}
       >
         <g fill="#A445ED" fillRule="evenodd">
           <circle cx="37.5" cy="37.5" r="37.5" opacity=".25" />
           <path d="M29 27v21l21-10.5z" />
         </g>
-      </svg>
+      </SVGStyled>
     </FlexContainer>
   )
 }
