@@ -57,6 +57,7 @@ const SearchIcon = styled.img`
   right: ${dimensions.spacing.md};
   top: 50%;
   transform: translate(0, -50%);
+  cursor: pointer;
 `
 
 // Navbar dropdown options passed as prop
@@ -70,6 +71,16 @@ function App() {
     setSearchQuery(value)
   }
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log(searchQuery)
+  }
+
+  const handleImageClick = () => {
+    // Handle image click
+    console.log(searchQuery)
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -77,13 +88,19 @@ function App() {
       <Container>
         <Navbar dropDownOptions={dropDownOptions} />
         <InputWrapper>
-          <SearchInput
-            type="text"
-            placeholder="Search for any word…"
-            value={searchQuery}
-            onChange={handleSearchQuery}
+          <form onSubmit={handleSubmit}>
+            <SearchInput
+              type="text"
+              placeholder="Search for any word…"
+              value={searchQuery}
+              onChange={handleSearchQuery}
+            />
+          </form>
+          <SearchIcon
+            src={searchIcon}
+            alt="Search Icon"
+            onClick={handleImageClick}
           />
-          <SearchIcon src={searchIcon} alt="Search Icon" />
         </InputWrapper>
 
         <ResultHeader word="Testing" phonetic="Testing phonetics" />
