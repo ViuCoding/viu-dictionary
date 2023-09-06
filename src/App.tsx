@@ -5,7 +5,7 @@ import { styled } from 'styled-components'
 
 import { dimensions } from './styles/dimensions'
 
-import { Navbar, ResultHeader } from './components/index'
+import { ErrorMsg, Navbar, ResultHeader } from './components/index'
 import { colors } from './styles/colors'
 
 import searchIcon from './assets/images/icon-search.svg'
@@ -85,11 +85,10 @@ function App() {
 
   const handleImageClick = () => {
     refetch()
-    // Handle image click
   }
 
   // Queries
-  const { data, refetch } = useQuery({
+  const { data, refetch, isError } = useQuery({
     queryKey: ['word'],
     queryFn: () => getWord(searchQuery),
     enabled: false,
@@ -131,7 +130,9 @@ function App() {
           />
         </InputWrapper>
 
-        {data && <ResultHeader dictionaryEntry={dictionaryEntry} />}
+        {data && !isError && <ResultHeader dictionaryEntry={dictionaryEntry} />}
+
+        {isError && <ErrorMsg />}
       </Container>
     </>
   )

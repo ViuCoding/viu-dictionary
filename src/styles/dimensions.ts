@@ -11,6 +11,7 @@ export const dimensions = {
     xl: '2rem',
     xxl: '2.5rem',
     xxxl: '3rem',
+    xxxxl: '6rem',
   },
   borderRadius: {
     xs: '0.25rem',
