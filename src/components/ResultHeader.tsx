@@ -4,11 +4,6 @@ import { dimensions } from '../styles/dimensions'
 import { fontSizes } from '../styles/fontSizes'
 import { colors } from '../styles/colors'
 
-type ResultHeaderProps = {
-  word: string
-  phonetic: string
-}
-
 const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -32,15 +27,26 @@ const PhoneticTranscription = styled.p`
   }
 `
 
+type ResultHeaderProps = {
+  dictionaryEntry: {
+    word: string
+    phonetic: string[]
+    audio: string[]
+  }[]
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ResultHeader: React.FC<ResultHeaderProps> = ({
-  word,
-  phonetic,
+  dictionaryEntry,
 }) => {
   return (
     <FlexContainer>
       <div>
-        <FoundWord>{word}</FoundWord>
-        <PhoneticTranscription>/{phonetic}/</PhoneticTranscription>
+        <FoundWord>{dictionaryEntry[0].word}</FoundWord>
+
+        <PhoneticTranscription>
+          {dictionaryEntry[0].phonetic[0]}
+        </PhoneticTranscription>
       </div>
 
       <svg

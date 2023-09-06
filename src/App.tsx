@@ -11,6 +11,9 @@ import { colors } from './styles/colors'
 import searchIcon from './assets/images/icon-search.svg'
 import { fontSizes } from './styles/fontSizes'
 
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+
 const GlobalStyle = createGlobalStyle`
  *{
    margin: 0;
@@ -63,6 +66,10 @@ const SearchIcon = styled.img`
 // Navbar dropdown options passed as prop
 const dropDownOptions = ['Sans Serif', 'Serif', 'Mono']
 
+const getWord = (query: string) => {
+  return axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${query}`)
+}
+
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -73,13 +80,34 @@ function App() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(searchQuery)
+    refetch()
   }
 
   const handleImageClick = () => {
+    refetch()
     // Handle image click
-    console.log(searchQuery)
   }
+
+  // Queries
+  const { data, refetch } = useQuery({
+    queryKey: ['word'],
+    queryFn: () => getWord(searchQuery),
+    enabled: false,
+  })
+
+  // Mapped Prop for ResultHeaderComponent
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dictionaryEntry = data?.data.map((word: any) => {
+    return {
+      word: word.word,
+      phonetic: word.phonetics
+        .filter((i: { text: undefined | string }) => i.text)
+        .map((i: { text: string[] }) => i.text),
+      audio: word.phonetics
+        .filter((i: { audio: undefined | string }) => i.audio)
+        .map((i: { audio: string[] }) => i.audio),
+    }
+  })
 
   return (
     <>
@@ -103,7 +131,7 @@ function App() {
           />
         </InputWrapper>
 
-        <ResultHeader word="Testing" phonetic="Testing phonetics" />
+        {data && <ResultHeader dictionaryEntry={dictionaryEntry} />}
       </Container>
     </>
   )
