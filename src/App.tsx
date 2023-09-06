@@ -5,10 +5,11 @@ import { styled } from 'styled-components'
 
 import { dimensions } from './styles/dimensions'
 
-import { Navbar } from './components/index'
+import { Navbar, ResultHeader } from './components/index'
 import { colors } from './styles/colors'
 
 import searchIcon from './assets/images/icon-search.svg'
+import { fontSizes } from './styles/fontSizes'
 
 const GlobalStyle = createGlobalStyle`
  *{
@@ -46,8 +47,8 @@ const SearchInput = styled.input`
     border: 1px solid ${colors.accents.info};
   }
 
-  &.error {
-    border-color: red; /* Define your error styles here */
+  @media (min-width: 768px) {
+    font-size: ${fontSizes.headingS};
   }
 `
 
@@ -72,6 +73,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
+
       <Container>
         <Navbar dropDownOptions={dropDownOptions} />
         <InputWrapper>
@@ -83,6 +85,8 @@ function App() {
           />
           <SearchIcon src={searchIcon} alt="Search Icon" />
         </InputWrapper>
+
+        <ResultHeader word="Testing" phonetic="Testing phonetics" />
       </Container>
     </>
   )
