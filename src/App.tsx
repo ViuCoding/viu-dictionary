@@ -13,6 +13,7 @@ import { fontSizes } from './styles/fontSizes'
 
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { DefinitionBox } from './components/DefinitionBox'
 
 const GlobalStyle = createGlobalStyle`
  *{
@@ -95,6 +96,9 @@ function App() {
   })
 
   // Mapped Prop for ResultHeaderComponent
+  // TO BE UPDATED TO INCLUDE MEANING AND DEFINITION, TO PASS IT AS PROP TO THE DEFINITION BOX
+  // TO BE UPDATED TO INCLUDE MEANING AND DEFINITION, TO PASS IT AS PROP TO THE DEFINITION BOX
+  // TO BE UPDATED TO INCLUDE MEANING AND DEFINITION, TO PASS IT AS PROP TO THE DEFINITION BOX
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dictionaryEntry = data?.data.map((word: any) => {
     return {
@@ -133,6 +137,8 @@ function App() {
         {data && !isError && <ResultHeader dictionaryEntry={dictionaryEntry} />}
 
         {isError && <ErrorMsg />}
+
+        {data && <DefinitionBox />}
       </Container>
     </>
   )
