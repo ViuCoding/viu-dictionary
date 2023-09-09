@@ -113,17 +113,18 @@ function App() {
     enabled: false,
   })
 
+  console.log()
+
   // Mapped Prop for ResultHeaderComponent
-  // TO BE UPDATED TO INCLUDE MEANING AND DEFINITION, TO PASS IT AS PROP TO THE DEFINITION BOX
-  // TO BE UPDATED TO INCLUDE MEANING AND DEFINITION, TO PASS IT AS PROP TO THE DEFINITION BOX
-  // TO BE UPDATED TO INCLUDE MEANING AND DEFINITION, TO PASS IT AS PROP TO THE DEFINITION BOX
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dictionaryEntry = data?.data.map((word: any) => {
+  const mappedDictionaryEntry = data?.data.map((word: any) => {
     return {
       word: word.word,
+
       phonetic: word.phonetics
         .filter((i: { text: undefined | string }) => i.text)
         .map((i: { text: string[] }) => i.text),
+
       audio: word.phonetics
         .filter((i: { audio: undefined | string }) => i.audio)
         .map((i: { audio: string[] }) => i.audio),
@@ -136,6 +137,7 @@ function App() {
 
       <Container>
         <Navbar dropDownOptions={dropDownOptions} />
+
         <InputWrapper>
           <form onSubmit={handleSubmit}>
             <SearchInput
@@ -145,6 +147,7 @@ function App() {
               onChange={handleSearchQuery}
             />
           </form>
+
           <SearchIcon
             src={searchIcon}
             alt="Search Icon"
@@ -152,11 +155,41 @@ function App() {
           />
         </InputWrapper>
 
-        {data && !isError && <ResultHeader dictionaryEntry={dictionaryEntry} />}
+        {data && !isError && (
+          <ResultHeader
+            word={mappedDictionaryEntry[0].word}
+            phonetic={mappedDictionaryEntry[0].phonetic[0]}
+            audio={mappedDictionaryEntry[0].audio[0]}
+          />
+        )}
 
         {isError && <ErrorMsg />}
 
-        {data && !isError && <DefinitionBox />}
+        {data && !isError && (
+          <>
+            {data?.data[0].meanings.map(
+              (meaning: {
+                partOfSpeech: string
+                definitions: {
+                  definition: string
+                  synonyms: string[]
+                  antonyms: string[]
+                  example: string
+                }[]
+                synonyms: string[]
+              }) => {
+                return (
+                  <DefinitionBox
+                    key={Math.random() * 1000}
+                    partOfSpeech={meaning.partOfSpeech}
+                    definitions={meaning.definitions}
+                    synonyms={meaning.synonyms}
+                  />
+                )
+              }
+            )}
+          </>
+        )}
 
         {data && !isError && (
           <>
@@ -165,9 +198,8 @@ function App() {
             <SourceSection>
               <p>Source</p>
 
-              <a href="#">
-                https://en.wiktionary.org/wiki/keyboard{' '}
-                <img src={linkIcon} alt="" />{' '}
+              <a href={data?.data[0].sourceUrls} target="_blank">
+                {data?.data[0].sourceUrls} <img src={linkIcon} alt="" />{' '}
               </a>
             </SourceSection>
           </>

@@ -4,10 +4,6 @@ import { fontSizes } from '../styles/fontSizes'
 import { colors } from '../styles/colors'
 import { dimensions } from '../styles/dimensions'
 
-// type DefinitionBoxProps {
-
-// }
-
 const PartOfSpeech = styled.h3`
   font-size: ${fontSizes.bodyM};
   font-style: italic;
@@ -65,11 +61,27 @@ const UseExample = styled.p`
 
 // this component need as props: partOfSpeech (noun, verb etc), wordDefinition, synonyms?, useExample?, sourceLink
 
-export const DefinitionBox: React.FC = () => {
+type DefinitionBoxProps = {
+  partOfSpeech: string
+  definitions: {
+    definition: string
+    synonyms: string[]
+    antonyms: string[]
+    example: string
+  }[]
+  synonyms: string[]
+}
+
+export const DefinitionBox: React.FC<DefinitionBoxProps> = ({
+  partOfSpeech,
+  definitions,
+  synonyms,
+}) => {
+
   return (
     <section>
       <FlexContainer>
-        <PartOfSpeech>noun</PartOfSpeech>
+        <PartOfSpeech>{partOfSpeech}</PartOfSpeech>
 
         <DividerLine />
       </FlexContainer>
@@ -77,29 +89,31 @@ export const DefinitionBox: React.FC = () => {
       <DefinitionHeading>Meaning</DefinitionHeading>
 
       <ListStyled>
-        <li>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis,
-          eligendi! Perferendis, qui esse nihil aperiam reprehenderit error
-          iusto fugiat sint pariatur natus suscipit neque voluptatem quia! Porro
-          voluptatum eos tempora et aut. Deleniti labore illum modi hic et esse
-          tempora!
-        </li>
-        <li>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis,
-          eligendi! Perferendis, qui esse nihil aperiam reprehenderit error
-          iusto fugiat sint pariatur natus suscipit neque voluptatem quia! Porro
-          voluptatum eos tempora et aut. Deleniti labore illum modi hic et esse
-          tempora!
-        </li>
+        {definitions && (
+          <>
+            {definitions.map((word) => {
+              return <li key={word.definition}>{word.definition}</li>
+            })}
+          </>
+        )}
       </ListStyled>
 
-      <SynonymsHeading>
-        Synonyms <SpanStyled>electronic keyboard</SpanStyled>
-      </SynonymsHeading>
+      {synonyms.length > 0 && (
+        <SynonymsHeading>
+          Synonyms
+          {synonyms.map((syn) => (
+            <SpanStyled key={syn}>{syn}</SpanStyled>
+          ))}
+        </SynonymsHeading>
+      )}
 
-      <UseExample>
-        “Keyboarding is the part of this job I hate the most.”
-      </UseExample>
+      {definitions && (
+        <>
+          {definitions.map((word) => {
+            return <UseExample key={word.example}>“{word.example}”</UseExample>
+          })}
+        </>
+      )}
     </section>
   )
 }
