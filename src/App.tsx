@@ -3,13 +3,14 @@ import { ChangeEvent, useState } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import { styled } from 'styled-components'
 
-import { dimensions } from './styles/dimensions'
-
 import { ErrorMsg, Navbar, ResultHeader } from './components/index'
+
+import { dimensions } from './styles/dimensions'
 import { colors } from './styles/colors'
+import { fontSizes } from './styles/fontSizes'
 
 import searchIcon from './assets/images/icon-search.svg'
-import { fontSizes } from './styles/fontSizes'
+import linkIcon from './assets/images/icon-new-window.svg'
 
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
@@ -62,6 +63,23 @@ const SearchIcon = styled.img`
   top: 50%;
   transform: translate(0, -50%);
   cursor: pointer;
+`
+
+const SourceSection = styled.div`
+  margin-top: ${dimensions.spacing.md};
+
+  & p {
+    margin-bottom: ${dimensions.spacing.xxxs};
+    text-decoration-line: underline;
+    font-size: ${fontSizes.bodyS};
+    color: ${colors.greys.grey1};
+  }
+`
+
+const DividerLine = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: ${colors.greys.grey2};
 `
 
 // Navbar dropdown options passed as prop
@@ -138,7 +156,22 @@ function App() {
 
         {isError && <ErrorMsg />}
 
-        {data && <DefinitionBox />}
+        {data && !isError && <DefinitionBox />}
+
+        {data && !isError && (
+          <>
+            <DividerLine />
+
+            <SourceSection>
+              <p>Source</p>
+
+              <a href="#">
+                https://en.wiktionary.org/wiki/keyboard{' '}
+                <img src={linkIcon} alt="" />{' '}
+              </a>
+            </SourceSection>
+          </>
+        )}
       </Container>
     </>
   )

@@ -4,8 +4,6 @@ import { fontSizes } from '../styles/fontSizes'
 import { colors } from '../styles/colors'
 import { dimensions } from '../styles/dimensions'
 
-import linkIcon from '../assets/images/icon-new-window.svg'
-
 // type DefinitionBoxProps {
 
 // }
@@ -65,16 +63,6 @@ const UseExample = styled.p`
   color: ${colors.greys.grey1};
 `
 
-const SourceSection = styled.div`
-  margin-top: ${dimensions.spacing.md};
-
-  & p {
-    margin-bottom: ${dimensions.spacing.xxxs};
-    text-decoration-line: underline;
-    font-size: ${fontSizes.bodyS};
-    color: ${colors.greys.grey1};
-  }
-`
 // this component need as props: partOfSpeech (noun, verb etc), wordDefinition, synonyms?, useExample?, sourceLink
 
 export const DefinitionBox: React.FC = () => {
@@ -112,16 +100,6 @@ export const DefinitionBox: React.FC = () => {
       <UseExample>
         “Keyboarding is the part of this job I hate the most.”
       </UseExample>
-
-      <DividerLine />
-
-      <SourceSection>
-        <p>Source</p>
-
-        <a href="#">
-          https://en.wiktionary.org/wiki/keyboard <img src={linkIcon} alt="" />{' '}
-        </a>
-      </SourceSection>
     </section>
   )
 }
