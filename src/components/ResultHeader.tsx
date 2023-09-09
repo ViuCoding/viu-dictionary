@@ -32,32 +32,30 @@ const SVGStyled = styled.svg`
 `
 
 type ResultHeaderProps = {
-  dictionaryEntry: {
-    word: string
-    phonetic: string[]
-    audio: string[]
-  }[]
+  word: string
+  phonetic: string
+  audio: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ResultHeader: React.FC<ResultHeaderProps> = ({
-  dictionaryEntry,
+  word,
+  phonetic,
+  audio,
 }) => {
   // eslint-disable-next-line prefer-const
-  let audio = new Audio(dictionaryEntry[0].audio[0])
+  let audioMP3 = new Audio(audio)
 
   const playAudio = () => {
-    audio.play()
+    audioMP3.play()
   }
 
   return (
     <FlexContainer>
       <div>
-        <FoundWord>{dictionaryEntry[0].word}</FoundWord>
+        <FoundWord>{word}</FoundWord>
 
-        <PhoneticTranscription>
-          {dictionaryEntry[0].phonetic[0]}
-        </PhoneticTranscription>
+        <PhoneticTranscription>{phonetic}</PhoneticTranscription>
       </div>
 
       <SVGStyled
