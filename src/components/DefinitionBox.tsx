@@ -30,6 +30,7 @@ const SynonymsHeading = styled.p`
   color: ${colors.greys.grey1};
   margin: ${dimensions.spacing.md} 0;
   display: flex;
+  flex-wrap: wrap;
   gap: ${dimensions.spacing.md};
 `
 
@@ -77,7 +78,6 @@ export const DefinitionBox: React.FC<DefinitionBoxProps> = ({
   definitions,
   synonyms,
 }) => {
-
   return (
     <section>
       <FlexContainer>
@@ -110,6 +110,7 @@ export const DefinitionBox: React.FC<DefinitionBoxProps> = ({
       {definitions && (
         <>
           {definitions.map((word) => {
+            if (!word.example) return null
             return <UseExample key={word.example}>“{word.example}”</UseExample>
           })}
         </>
