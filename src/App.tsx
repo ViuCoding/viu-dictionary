@@ -113,8 +113,6 @@ function App() {
     enabled: false,
   })
 
-  console.log()
-
   // Mapped Prop for ResultHeaderComponent
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mappedDictionaryEntry = data?.data.map((word: any) => {
