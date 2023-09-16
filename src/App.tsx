@@ -121,7 +121,6 @@ function App() {
     setChecked(e.target.checked)
     setColorTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'))
   }
-  console.log(colorTheme)
 
   const handleSearchQuery = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
