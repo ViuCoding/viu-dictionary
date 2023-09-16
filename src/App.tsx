@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 
 import { createGlobalStyle } from 'styled-components'
 import { styled } from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 
 import { ErrorMsg, Navbar, ResultHeader } from './components/index'
 
@@ -25,6 +26,8 @@ const GlobalStyle = createGlobalStyle`
   
   body{
     font-family: "Inter"; 
+    background-color: ${({ theme }) => theme.bodyBg};
+    transition: all 0.3s linear;
   }
   `
 
@@ -44,7 +47,8 @@ const SearchInput = styled.input`
   padding: ${dimensions.spacing.sm} ${dimensions.spacing.md};
   border: none;
   border-radius: ${dimensions.borderRadius.base};
-  background-color: ${colors.greys.grey3};
+  background-color: ${({ theme }) => theme.inputBox};
+  color: ${({ theme }) => theme.mainText};
   font-weight: 700;
 
   &:focus-visible {
@@ -74,12 +78,16 @@ const SourceSection = styled.div`
     font-size: ${fontSizes.bodyS};
     color: ${colors.greys.grey1};
   }
+
+  & a {
+    color: ${({ theme }) => theme.mainText};
+  }
 `
 
 const DividerLine = styled.div`
   width: 100%;
   height: 1px;
-  background-color: ${colors.greys.grey2};
+  background-color: ${({ theme }) => theme.dividerLine};
 `
 
 // Navbar dropdown options passed as prop
@@ -89,8 +97,31 @@ const getWord = (query: string) => {
   return axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${query}`)
 }
 
+// Styled Components Themes
+
+const lightTheme = {
+  bodyBg: colors.white,
+  mainText: colors.darks.dark3,
+  inputBox: colors.greys.grey3,
+  dividerLine: colors.greys.grey2,
+}
+const darkTheme = {
+  bodyBg: colors.darks.dark1,
+  mainText: colors.white,
+  inputBox: colors.darks.dark2,
+  dividerLine: colors.darks.dark4,
+}
+
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [checked, setChecked] = useState(false)
+  const [colorTheme, setColorTheme] = useState('light')
+
+  const handleToggleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setChecked(e.target.checked)
+    setColorTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'))
+  }
+  console.log(colorTheme)
 
   const handleSearchQuery = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -130,11 +161,15 @@ function App() {
   })
 
   return (
-    <>
+    <ThemeProvider theme={colorTheme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
 
       <Container>
-        <Navbar dropDownOptions={dropDownOptions} />
+        <Navbar
+          dropDownOptions={dropDownOptions}
+          checked={checked}
+          handleToggleChange={handleToggleChange}
+        />
 
         <InputWrapper>
           <form onSubmit={handleSubmit}>
@@ -203,7 +238,7 @@ function App() {
           </>
         )}
       </Container>
-    </>
+    </ThemeProvider>
   )
 }
 
