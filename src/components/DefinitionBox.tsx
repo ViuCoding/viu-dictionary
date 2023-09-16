@@ -7,6 +7,7 @@ import { dimensions } from '../styles/dimensions'
 const PartOfSpeech = styled.h3`
   font-size: ${fontSizes.bodyM};
   font-style: italic;
+  color: ${({ theme }) => theme.mainText};
 `
 
 const FlexContainer = styled.div`
@@ -19,7 +20,7 @@ const FlexContainer = styled.div`
 const DividerLine = styled.div`
   width: 100%;
   height: 1px;
-  background-color: ${colors.greys.grey2};
+  background-color: ${({ theme }) => theme.dividerLine};
 `
 
 const DefinitionHeading = styled.p`
@@ -46,7 +47,7 @@ const ListStyled = styled.ul`
 
   & li {
     line-height: ${dimensions.spacing.md};
-    color: ${colors.darks.dark3};
+    color: ${({ theme }) => theme.mainText};
     margin-bottom: ${dimensions.spacing.xs};
   }
   & li::marker {

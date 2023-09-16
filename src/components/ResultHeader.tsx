@@ -13,6 +13,7 @@ const FlexContainer = styled.div`
 const FoundWord = styled.h1`
   font-size: ${fontSizes.headingL};
   margin-bottom: ${dimensions.spacing.xxxs};
+  color: ${({ theme }) => theme.mainText};
 
   @media (min-width: 768px) {
     font-size: ${fontSizes.headingXL};

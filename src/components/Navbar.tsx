@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 import { styled } from 'styled-components'
 
 import navLogo from '../assets/images/logo.svg'
@@ -30,6 +30,10 @@ const DividerBar = styled.div`
   width: 1px;
   height: 32px;
   background-color: ${colors.greys.grey2};
+`
+
+const DropDownText = styled.div`
+  color: ${({ theme }) => theme.mainText};
 `
 
 // toggle switch
@@ -74,27 +78,28 @@ const Input = styled.input`
 
 type NavbarProps = {
   dropDownOptions: string[]
+  checked: boolean
+  handleToggleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ dropDownOptions }) => {
-  const [checked, setChecked] = useState(false) // store value
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setChecked(e.target.checked)
-
+export const Navbar: React.FC<NavbarProps> = ({
+  dropDownOptions,
+  checked,
+  handleToggleChange,
+}) => {
   return (
     <header>
       <NavStyled>
         <img src={navLogo} alt="Logo" />
 
         <FlexContainer>
-          <>{dropDownOptions[0]}</>
+          <DropDownText>{dropDownOptions[0]}</DropDownText>
           <img src={arrowDown} alt="" />
 
           <DividerBar />
 
           <Label>
-            <Input type="checkbox" onChange={handleChange} />
+            <Input type="checkbox" onChange={handleToggleChange} />
             <Switch />
           </Label>
 
