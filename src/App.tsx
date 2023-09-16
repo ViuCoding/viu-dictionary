@@ -126,7 +126,7 @@ function App() {
   const [isQueryEmpty, setIsQueryEmpty] = useState(false)
   const [checked, setChecked] = useState(false)
   const [colorTheme, setColorTheme] = useState('light')
-  const textInputRef = useRef<HTMLInputElement>()
+  const textInputRef = useRef<HTMLInputElement | null>(null)
 
   const handleToggleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked)
