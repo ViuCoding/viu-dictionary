@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 
 import { createGlobalStyle } from 'styled-components'
 import { styled } from 'styled-components'
@@ -56,9 +56,18 @@ const SearchInput = styled.input`
     border: 1px solid ${colors.accents.info};
   }
 
+  &.error {
+    border: 1px solid ${colors.accents.error};
+  }
+
   @media (min-width: 768px) {
     font-size: ${fontSizes.headingS};
   }
+`
+const InputError = styled.p`
+  color: ${colors.accents.error};
+  position: relative;
+  top: -30px;
 `
 
 const SearchIcon = styled.img`
@@ -114,8 +123,10 @@ const darkTheme = {
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [isQueryEmpty, setIsQueryEmpty] = useState(false)
   const [checked, setChecked] = useState(false)
   const [colorTheme, setColorTheme] = useState('light')
+  const textInputRef = useRef<HTMLInputElement>()
 
   const handleToggleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked)
@@ -124,16 +135,32 @@ function App() {
 
   const handleSearchQuery = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
+    textInputRef?.current?.classList.remove('error')
+    setIsQueryEmpty(false)
     setSearchQuery(value)
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    refetch()
+    if (!searchQuery) {
+      textInputRef?.current?.classList.add('error')
+      setIsQueryEmpty(true)
+    } else {
+      textInputRef?.current?.classList.remove('error')
+      setIsQueryEmpty(false)
+      refetch()
+    }
   }
 
   const handleImageClick = () => {
-    refetch()
+    if (!searchQuery) {
+      textInputRef?.current?.classList.add('error')
+      setIsQueryEmpty(true)
+    } else {
+      textInputRef?.current?.classList.remove('error')
+      setIsQueryEmpty(false)
+      refetch()
+    }
   }
 
   // Queries
@@ -177,6 +204,7 @@ function App() {
               placeholder="Search for any word…"
               value={searchQuery}
               onChange={handleSearchQuery}
+              ref={textInputRef}
             />
           </form>
 
@@ -186,6 +214,7 @@ function App() {
             onClick={handleImageClick}
           />
         </InputWrapper>
+        {isQueryEmpty && <InputError>Whoops, can’t be empty…</InputError>}
 
         {data && !isError && (
           <ResultHeader
