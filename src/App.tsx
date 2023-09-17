@@ -4,7 +4,12 @@ import { createGlobalStyle } from 'styled-components'
 import { styled } from 'styled-components'
 import { ThemeProvider } from 'styled-components'
 
-import { ErrorMsg, Navbar, ResultHeader } from './components/index'
+import {
+  ErrorMsg,
+  LoadingSpinner,
+  Navbar,
+  ResultHeader,
+} from './components/index'
 
 import { dimensions } from './styles/dimensions'
 import { colors } from './styles/colors'
@@ -166,7 +171,7 @@ function App() {
   }
 
   // Queries
-  const { data, refetch, isError } = useQuery({
+  const { data, refetch, isError, isFetching } = useQuery({
     queryKey: ['word'],
     queryFn: () => getWord(searchQuery),
     enabled: false,
@@ -198,7 +203,6 @@ function App() {
           checked={checked}
           handleToggleChange={handleToggleChange}
         />
-
         <InputWrapper>
           <form onSubmit={handleSubmit}>
             <SearchInput
@@ -218,17 +222,17 @@ function App() {
         </InputWrapper>
         {isQueryEmpty && <InputError>Whoops, can’t be empty…</InputError>}
 
-        {data && !isError && (
+        {isFetching && <LoadingSpinner />}
+
+        {data && !isError && !isFetching && (
           <ResultHeader
             word={mappedDictionaryEntry[0].word}
             phonetic={mappedDictionaryEntry[0].phonetic[0]}
             audio={mappedDictionaryEntry[0].audio[0]}
           />
         )}
-
         {isError && <ErrorMsg />}
-
-        {data && !isError && (
+        {data && !isError && !isFetching && (
           <>
             {data?.data[0].meanings.map(
               (meaning: {
@@ -253,8 +257,7 @@ function App() {
             )}
           </>
         )}
-
-        {data && !isError && (
+        {data && !isError && !isFetching && (
           <>
             <DividerLine />
 
