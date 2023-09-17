@@ -18,6 +18,7 @@ const ErrorImg = styled.img`
 
 const SubHeading = styled.h2`
   font-size: ${fontSizes.headingS};
+  color: ${({ theme }) => theme.mainText};
   margin-bottom: ${dimensions.spacing.md};
 `
 
