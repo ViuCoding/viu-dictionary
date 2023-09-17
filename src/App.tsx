@@ -149,6 +149,7 @@ function App() {
       textInputRef?.current?.classList.remove('error')
       setIsQueryEmpty(false)
       refetch()
+      setSearchQuery('')
     }
   }
 
@@ -160,6 +161,7 @@ function App() {
       textInputRef?.current?.classList.remove('error')
       setIsQueryEmpty(false)
       refetch()
+      setSearchQuery('')
     }
   }
 
