@@ -1,8 +1,10 @@
 import { ChangeEvent, useRef, useState } from 'react'
 
-import { createGlobalStyle } from 'styled-components'
-import { styled } from 'styled-components'
-import { ThemeProvider } from 'styled-components'
+import { createGlobalStyle, styled, ThemeProvider } from 'styled-components'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+
+import { dropDownType, Meaning } from './Types/types'
 
 import {
   ErrorMsg,
@@ -18,11 +20,13 @@ import { fontSizes } from './styles/fontSizes'
 import searchIcon from './assets/images/icon-search.svg'
 import linkIcon from './assets/images/icon-new-window.svg'
 
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 import { DefinitionBox } from './components/DefinitionBox'
 
-const GlobalStyle = createGlobalStyle`
+type FontFamily = {
+  familia: string
+}
+
+const GlobalStyle = createGlobalStyle<FontFamily>`
  *{
    margin: 0;
    padding: 0;
@@ -30,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   body{
-    font-family: "Inter"; 
+    font-family: ${({ familia }) => familia}; 
     background-color: ${({ theme }) => theme.bodyBg};
     transition: all 0.3s linear;
   }
@@ -75,8 +79,10 @@ const InputError = styled.p`
   top: -30px;
 `
 
-const SearchIcon = styled.img`
+const SearchButton = styled.button`
   position: absolute;
+  border: none;
+  background-color: transparent;
   right: ${dimensions.spacing.md};
   top: 50%;
   transform: translate(0, -50%);
@@ -103,12 +109,18 @@ const DividerLine = styled.div`
   height: 1px;
   background-color: ${({ theme }) => theme.dividerLine};
 `
-
 // Navbar dropdown options passed as prop
-const dropDownOptions = ['Sans Serif', 'Serif', 'Mono']
+const dropDownOptions: dropDownType = [
+  { fontValue: 'Inter', fontName: 'Sans Serif' },
+  { fontValue: 'Lora', fontName: 'Serif' },
+  { fontValue: 'Inconsolata', fontName: 'Mono' },
+]
 
 const getWord = (query: string) => {
-  return axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${query}`)
+  const data = axios.get(
+    `https://api.dictionaryapi.dev/api/v2/entries/en/${query}`
+  )
+  return data
 }
 
 // Styled Components Themes
@@ -116,14 +128,18 @@ const getWord = (query: string) => {
 const lightTheme = {
   bodyBg: colors.white,
   mainText: colors.darks.dark3,
+  dropDown: colors.white,
   inputBox: colors.greys.grey3,
   dividerLine: colors.greys.grey2,
+  boxShadow: `0px 5px 30px 0px rgba(0, 0, 0, 0.10)`,
 }
 const darkTheme = {
   bodyBg: colors.darks.dark1,
   mainText: colors.white,
+  dropDown: colors.darks.dark2,
   inputBox: colors.darks.dark2,
   dividerLine: colors.darks.dark4,
+  boxShadow: `0px 5px 30px 0px #A445ED`,
 }
 
 function App() {
@@ -132,6 +148,7 @@ function App() {
   const [checked, setChecked] = useState(false)
   const [colorTheme, setColorTheme] = useState('light')
   const textInputRef = useRef<HTMLInputElement | null>(null)
+  const [fontFam, setFontFam] = useState('Inter')
 
   const handleToggleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked)
@@ -140,34 +157,38 @@ function App() {
 
   const handleSearchQuery = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
+    removeErrorClass()
+    setSearchQuery(value)
+  }
+
+  const displaySearchError = () => {
+    textInputRef?.current?.classList.add('error')
+    setIsQueryEmpty(true)
+  }
+
+  const removeErrorClass = () => {
     textInputRef?.current?.classList.remove('error')
     setIsQueryEmpty(false)
-    setSearchQuery(value)
+  }
+
+  const handleSearchSubmit = () => {
+    removeErrorClass()
+    refetch()
+    setSearchQuery('')
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     if (!searchQuery) {
-      textInputRef?.current?.classList.add('error')
-      setIsQueryEmpty(true)
+      displaySearchError()
     } else {
-      textInputRef?.current?.classList.remove('error')
-      setIsQueryEmpty(false)
-      refetch()
-      setSearchQuery('')
+      handleSearchSubmit()
     }
   }
 
-  const handleImageClick = () => {
-    if (!searchQuery) {
-      textInputRef?.current?.classList.add('error')
-      setIsQueryEmpty(true)
-    } else {
-      textInputRef?.current?.classList.remove('error')
-      setIsQueryEmpty(false)
-      refetch()
-      setSearchQuery('')
-    }
+  const handleDropDownFont = (style: string) => {
+    setFontFam(style)
   }
 
   // Queries
@@ -195,14 +216,16 @@ function App() {
 
   return (
     <ThemeProvider theme={colorTheme === 'light' ? lightTheme : darkTheme}>
-      <GlobalStyle />
+      <GlobalStyle familia={fontFam} />
 
       <Container>
         <Navbar
           dropDownOptions={dropDownOptions}
           checked={checked}
           handleToggleChange={handleToggleChange}
+          handleDropDownFont={handleDropDownFont}
         />
+
         <InputWrapper>
           <form onSubmit={handleSubmit}>
             <SearchInput
@@ -212,14 +235,12 @@ function App() {
               onChange={handleSearchQuery}
               ref={textInputRef}
             />
+            <SearchButton type="submit">
+              <img src={searchIcon} alt="Search Icon" />
+            </SearchButton>
           </form>
-
-          <SearchIcon
-            src={searchIcon}
-            alt="Search Icon"
-            onClick={handleImageClick}
-          />
         </InputWrapper>
+
         {isQueryEmpty && <InputError>Whoops, can’t be empty…</InputError>}
 
         {isFetching && <LoadingSpinner />}
@@ -234,27 +255,16 @@ function App() {
         {isError && <ErrorMsg />}
         {data && !isError && !isFetching && (
           <>
-            {data?.data[0].meanings.map(
-              (meaning: {
-                partOfSpeech: string
-                definitions: {
-                  definition: string
-                  synonyms: string[]
-                  antonyms: string[]
-                  example: string
-                }[]
-                synonyms: string[]
-              }) => {
-                return (
-                  <DefinitionBox
-                    key={Math.random() * 1000}
-                    partOfSpeech={meaning.partOfSpeech}
-                    definitions={meaning.definitions}
-                    synonyms={meaning.synonyms}
-                  />
-                )
-              }
-            )}
+            {data?.data[0].meanings.map((meaning: Meaning) => {
+              return (
+                <DefinitionBox
+                  key={Math.random() * 1000}
+                  partOfSpeech={meaning.partOfSpeech}
+                  definitions={meaning.definitions}
+                  synonyms={meaning.synonyms}
+                />
+              )
+            })}
           </>
         )}
         {data && !isError && !isFetching && (

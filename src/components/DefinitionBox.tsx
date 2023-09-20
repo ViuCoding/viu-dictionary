@@ -103,7 +103,7 @@ export const DefinitionBox: React.FC<DefinitionBoxProps> = ({
         <SynonymsHeading>
           Synonyms
           {synonyms.map((syn) => (
-            <SpanStyled key={syn}>{syn}</SpanStyled>
+            <SpanStyled key={Math.random() * 100}>{syn}</SpanStyled>
           ))}
         </SynonymsHeading>
       )}
