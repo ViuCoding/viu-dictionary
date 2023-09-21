@@ -2,6 +2,7 @@ import { ChangeEvent, useRef, useState } from 'react'
 
 import { createGlobalStyle, styled, ThemeProvider } from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
+import { nanoid } from 'nanoid'
 import axios from 'axios'
 
 import { dropDownType, Meaning } from './Types/types'
@@ -258,7 +259,7 @@ function App() {
             {data?.data[0].meanings.map((meaning: Meaning) => {
               return (
                 <DefinitionBox
-                  key={Math.random() * 1000}
+                  key={nanoid()}
                   partOfSpeech={meaning.partOfSpeech}
                   definitions={meaning.definitions}
                   synonyms={meaning.synonyms}

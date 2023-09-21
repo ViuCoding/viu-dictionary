@@ -1,5 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
+import { nanoid } from 'nanoid'
 import { fontSizes } from '../styles/fontSizes'
 import { colors } from '../styles/colors'
 import { dimensions } from '../styles/dimensions'
@@ -103,7 +104,7 @@ export const DefinitionBox: React.FC<DefinitionBoxProps> = ({
         <SynonymsHeading>
           Synonyms
           {synonyms.map((syn) => (
-            <SpanStyled key={Math.random() * 100}>{syn}</SpanStyled>
+            <SpanStyled key={nanoid()}>{syn}</SpanStyled>
           ))}
         </SynonymsHeading>
       )}
