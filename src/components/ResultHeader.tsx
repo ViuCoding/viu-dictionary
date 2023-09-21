@@ -1,8 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { dimensions } from '../styles/dimensions'
-import { fontSizes } from '../styles/fontSizes'
-import { colors } from '../styles/colors'
+import { dimensions, colors, fontSizes } from '../styles/index'
 
 const FlexContainer = styled.div`
   display: flex;

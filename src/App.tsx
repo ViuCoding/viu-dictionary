@@ -5,26 +5,23 @@ import { useQuery } from '@tanstack/react-query'
 import { nanoid } from 'nanoid'
 import axios from 'axios'
 
-import { dropDownType, Meaning } from './Types/types'
+import { DropdownType, Meaning } from './Types/types'
 
 import {
   ErrorMsg,
   LoadingSpinner,
   Navbar,
   ResultHeader,
+  DefinitionBox,
 } from './components/index'
 
-import { dimensions } from './styles/dimensions'
-import { colors } from './styles/colors'
-import { fontSizes } from './styles/fontSizes'
+import { dimensions, colors, fontSizes } from './styles/index'
 
 import searchIcon from './assets/images/icon-search.svg'
 import linkIcon from './assets/images/icon-new-window.svg'
 
-import { DefinitionBox } from './components/DefinitionBox'
-
 type FontFamily = {
-  familia: string
+  fontFam: string
 }
 
 const GlobalStyle = createGlobalStyle<FontFamily>`
@@ -35,7 +32,7 @@ const GlobalStyle = createGlobalStyle<FontFamily>`
   }
   
   body{
-    font-family: ${({ familia }) => familia}; 
+    font-family: ${({ fontFam }) => fontFam}; 
     background-color: ${({ theme }) => theme.bodyBg};
     transition: all 0.3s linear;
   }
@@ -111,7 +108,7 @@ const DividerLine = styled.div`
   background-color: ${({ theme }) => theme.dividerLine};
 `
 // Navbar dropdown options passed as prop
-const dropDownOptions: dropDownType = [
+const dropDownOptions: DropdownType = [
   { fontValue: 'Inter', fontName: 'Sans Serif' },
   { fontValue: 'Lora', fontName: 'Serif' },
   { fontValue: 'Inconsolata', fontName: 'Mono' },
@@ -217,7 +214,7 @@ function App() {
 
   return (
     <ThemeProvider theme={colorTheme === 'light' ? lightTheme : darkTheme}>
-      <GlobalStyle familia={fontFam} />
+      <GlobalStyle fontFam={fontFam} />
 
       <Container>
         <Navbar

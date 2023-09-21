@@ -2,9 +2,7 @@ import React from 'react'
 import { styled } from 'styled-components'
 
 import sadFace from '../assets/images/sadFace.png'
-import { fontSizes } from '../styles/fontSizes'
-import { dimensions } from '../styles/dimensions'
-import { colors } from '../styles/colors'
+import { fontSizes, dimensions, colors } from '../styles/index'
 
 const CenteredSection = styled.section`
   text-align: center;

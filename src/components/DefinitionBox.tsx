@@ -1,9 +1,8 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { nanoid } from 'nanoid'
-import { fontSizes } from '../styles/fontSizes'
-import { colors } from '../styles/colors'
-import { dimensions } from '../styles/dimensions'
+import { fontSizes, colors, dimensions } from '../styles/index'
+import { DefinitionBoxProps } from '../Types/types'
 
 const PartOfSpeech = styled.h3`
   font-size: ${fontSizes.bodyM};
@@ -63,17 +62,6 @@ const UseExample = styled.p`
 `
 
 // this component need as props: partOfSpeech (noun, verb etc), wordDefinition, synonyms?, useExample?, sourceLink
-
-type DefinitionBoxProps = {
-  partOfSpeech: string
-  definitions: {
-    definition: string
-    synonyms: string[]
-    antonyms: string[]
-    example: string
-  }[]
-  synonyms: string[]
-}
 
 export const DefinitionBox: React.FC<DefinitionBoxProps> = ({
   partOfSpeech,

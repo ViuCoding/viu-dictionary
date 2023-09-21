@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../styles/colors'
+import { colors } from '../styles/index'
 
 const Spinner = styled.div`
   &.lds-ellipsis {
@@ -25,12 +25,12 @@ const Spinner = styled.div`
     left: 8px;
     background: ${colors.greys.grey2};
     animation: lds-ellipsis2 0.6s infinite;
-}
-&.lds-ellipsis div:nth-child(3) {
+  }
+  &.lds-ellipsis div:nth-child(3) {
     left: 32px;
     animation: lds-ellipsis2 0.6s infinite;
-}
-&.lds-ellipsis div:nth-child(4) {
+  }
+  &.lds-ellipsis div:nth-child(4) {
     left: 56px;
     animation: lds-ellipsis3 0.6s infinite;
   }

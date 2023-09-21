@@ -7,7 +7,7 @@ import arrowDown from '../assets/images/icon-arrow-down.svg'
 import { fontSizes } from '../styles/fontSizes'
 import { colors } from '../styles/colors'
 import { dimensions } from '../styles/dimensions'
-import { dropDownType } from '../Types/types'
+import { DropdownType } from '../Types/types'
 
 const NavStyled = styled.nav`
   display: flex;
@@ -124,7 +124,7 @@ const Input = styled.input`
 `
 
 type NavbarProps = {
-  dropDownOptions: dropDownType
+  dropDownOptions: DropdownType
   checked: boolean
   handleToggleChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleDropDownFont: (style: string) => void
