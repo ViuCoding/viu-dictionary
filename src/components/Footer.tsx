@@ -16,9 +16,9 @@ const FlexContainer = styled.div`
   gap: 24px;
   justify-content: space-between;
   flex-direction: column;
+  align-items: center;
 
   @media (min-width: 768px) {
-    align-items: center;
     flex-direction: row;
   }
 `
