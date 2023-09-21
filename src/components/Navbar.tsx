@@ -76,6 +76,10 @@ const DropDownOptions = styled.div`
   p:nth-child(3) {
     font-family: 'Inconsolata';
   }
+
+  p:hover {
+    color: ${colors.accents.info};
+  }
 `
 
 // toggle switch
@@ -133,6 +137,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   handleDropDownFont,
 }) => {
   const [isVisible, setIsVisible] = useState(false)
+  const [fontNameDisplay, setFontNameDisplay] = useState(
+    dropDownOptions[0].fontName
+  )
+
+  const handleDropDownClick = (fontValue: string, fontName: string) => {
+    handleDropDownFont(fontValue)
+    setFontNameDisplay(fontName)
+  }
+
+  const toggleDropdown = () => {
+    setIsVisible((prevState) => !prevState)
+  }
 
   return (
     <header>
@@ -140,17 +156,17 @@ export const Navbar: React.FC<NavbarProps> = ({
         <img src={navLogo} alt="Logo" />
 
         <FlexContainer>
-          <DropDownWrapper
-            onClick={() => setIsVisible((prevState) => !prevState)}
-          >
-            <DropDownText>{dropDownOptions[0].fontName}</DropDownText>
+          <DropDownWrapper onClick={toggleDropdown}>
+            <DropDownText>{fontNameDisplay}</DropDownText>
             {isVisible && (
               <DropDownContainer>
                 <DropDownOptions>
                   {dropDownOptions.map((opt) => (
                     <p
                       key={opt.fontName}
-                      onClick={() => handleDropDownFont(opt.fontValue)}
+                      onClick={() =>
+                        handleDropDownClick(opt.fontValue, opt.fontName)
+                      }
                     >
                       {opt.fontName}
                     </p>
