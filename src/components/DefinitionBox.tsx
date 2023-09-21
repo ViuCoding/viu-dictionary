@@ -3,6 +3,7 @@ import { styled } from 'styled-components'
 import { nanoid } from 'nanoid'
 import { fontSizes, colors, dimensions } from '../styles/index'
 import { DefinitionBoxProps } from '../Types/types'
+import { DividerLine } from '../styles/styledComponents'
 
 const PartOfSpeech = styled.h3`
   font-size: ${fontSizes.bodyM};
@@ -15,12 +16,6 @@ const FlexContainer = styled.div`
   gap: 1rem;
   align-items: center;
   margin: ${dimensions.spacing.xl} 0;
-`
-
-const DividerLine = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: ${({ theme }) => theme.dividerLine};
 `
 
 const DefinitionHeading = styled.p`

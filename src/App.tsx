@@ -20,6 +20,7 @@ import { dimensions, colors, fontSizes } from './styles/index'
 
 import searchIcon from './assets/images/icon-search.svg'
 import linkIcon from './assets/images/icon-new-window.svg'
+import { DividerLine } from './styles/styledComponents'
 
 type FontFamily = {
   fontFam: string
@@ -111,11 +112,6 @@ const SourceSection = styled.div`
   }
 `
 
-const DividerLine = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: ${({ theme }) => theme.dividerLine};
-`
 // Navbar dropdown options passed as prop
 const dropDownOptions: DropdownType = [
   { fontValue: 'Inter', fontName: 'Sans Serif' },
