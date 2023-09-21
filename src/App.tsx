@@ -13,6 +13,7 @@ import {
   Navbar,
   ResultHeader,
   DefinitionBox,
+  Footer,
 } from './components/index'
 
 import { dimensions, colors, fontSizes } from './styles/index'
@@ -36,12 +37,20 @@ const GlobalStyle = createGlobalStyle<FontFamily>`
     background-color: ${({ theme }) => theme.bodyBg};
     transition: all 0.3s linear;
   }
-  `
+    `
 
 const Container = styled.div`
   width: 90%;
   max-width: 736px;
-  margin: ${dimensions.spacing.xxxl} auto;
+  margin: 0 auto;
+  padding-top: ${dimensions.spacing.xxxl};
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  footer {
+    margin-top: auto;
+  }
 `
 
 const InputWrapper = styled.div`
@@ -278,6 +287,8 @@ function App() {
             </SourceSection>
           </>
         )}
+
+        <Footer />
       </Container>
     </ThemeProvider>
   )

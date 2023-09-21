@@ -2,11 +2,9 @@ import '../node_modules/modern-normalize/modern-normalize.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+import './global.css'
 
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // Create a client
 const queryClient = new QueryClient()
