@@ -13,8 +13,14 @@ const FooterStyled = styled.footer`
 const FlexContainer = styled.div`
   display: flex;
   font-weight: 700;
+  gap: 24px;
   justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    align-items: center;
+    flex-direction: row;
+  }
 `
 
 const FooterLogo = styled(FlexContainer)`
@@ -27,7 +33,7 @@ const FooterLogo = styled(FlexContainer)`
     color: ${colors.accents.info};
   }
   img {
-    width: 41px;
+    width: 34px;
   }
 `
 
@@ -39,7 +45,7 @@ const SocialMedias = styled(FlexContainer)`
     color: ${({ theme }) => theme.mainText};
   }
   img {
-    width: 34px;
+    width: 24px;
   }
 `
 
@@ -49,7 +55,7 @@ export const Footer: React.FC = () => {
       <FlexContainer>
         <SocialMedias>
           <a href="https://vincenzocristiano.dev/" target="_blank">
-            Check out my Portfolio
+            Portfolio
           </a>
         </SocialMedias>
 
