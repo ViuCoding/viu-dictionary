@@ -6,5 +6,5 @@ const FooterStyled = styled.footer`
 `
 
 export const Footer: React.FC = () => {
-  return <FooterStyled>LOL</FooterStyled>
+  return <FooterStyled></FooterStyled>
 }
