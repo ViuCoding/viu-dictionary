@@ -13,7 +13,6 @@ import {
   Navbar,
   ResultHeader,
   DefinitionBox,
-  Footer,
 } from './components/index'
 
 import { dimensions, colors, fontSizes } from './styles/index'
@@ -284,7 +283,7 @@ function App() {
           </>
         )}
 
-        <Footer />
+        {/* <Footer /> */}
       </Container>
     </ThemeProvider>
   )
